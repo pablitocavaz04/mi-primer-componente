@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+    <app-people-counter number="{{(peopleSvc.people$ | async)?.length}}"></app-people-counter>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+      <app-people-counter></app-people-counter>
+    </ion-toolbar>
+  </ion-header>
+  <ion-item>
+    <ion-input label="Nombre" type="text" placeholder="Introduzca el nombre" labelPlacement="floating" #nameInput></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input label="Apellidos" type="text" placeholder="Introduzca los apellidos" labelPlacement="floating" #surnameInput></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input label="Edad" type="text" placeholder="Introduzca su edad" labelPlacement="floating" #ageInput></ion-input>
+  </ion-item>
+
+  <ion-button expand="full" (click)="submit(nameInput, surnameInput, ageInput)">
+    Añadir tarjeta
+  </ion-button>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let person of peopleSvc.people$ | async; let idx = index">
+        <app-personal-card 
+          [name]="person.name" 
+          [surname]="person.surname" 
+          [age]="person.age" 
+          [isFav]="person.isFav"
+          (favClicked)="onFavClicked(idx)"
+          (deleteClicked)="onDeleteClicked(idx)">
+        </app-personal-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
